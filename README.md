@@ -30,18 +30,21 @@ bugs found in the original analysis and fixed here.
 5. **Leakage analysis** (`tests/test_preprocessing.py`): regression tests
    pinning both fixes (see Methodology notes).
 
-## Results (held-out test)
+## Results (held-out test, corrected pipeline)
 
 | Model | Accuracy | Macro F1 |
 |-------|----------|----------|
-| MLP (grid best) | 0.88 | 0.86 |
-| SVM | 0.86 | 0.85 |
-| KNN(5) | 0.82 | 0.80 |
-| Logistic Regression | 0.79 | 0.77 |
-| Naive Bayes | 0.73 | 0.66 |
+| MLP (grid best: 64 nodes, dropout 0.2, lr 0.001, batch 32) | 0.8754 | 0.8571 |
+| SVM | 0.8570 | — |
+| KNN(5) | 0.8128 | — |
+| Logistic Regression | 0.7789 | — |
+| Naive Bayes | 0.7229 | — |
 
-MLP per-class: hadron P/R 0.89/0.74, gamma P/R 0.87/0.95 — background
-rejection is the weak side.
+MLP per-class: hadron P/R 0.8906/0.7362, gamma P/R 0.8692/0.9509 —
+background rejection is the weak side. The original notebook reported
+0.88/0.86 under the leaky scaler; the corrected rerun (`make train`,
+54 configs, `models/grid_report.json`) lands at 0.8754/0.8571 —
+same ranking, same conclusion, now methodologically clean.
 
 ## Methodology Notes
 

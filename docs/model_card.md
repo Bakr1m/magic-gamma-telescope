@@ -21,17 +21,18 @@ image parameters. Research artifact — not a detector component.
   100 epochs, selection on validation loss.
 - Baselines: KNN(5), GaussianNB, LogisticRegression, SVM (defaults).
 
-## Metrics (held-out test, notebook study)
+## Metrics (held-out test, corrected pipeline rerun)
 | Model | Accuracy | Macro F1 |
 |-------|----------|----------|
-| MLP (grid best) | 0.88 | 0.86 |
-| SVM | 0.86 | 0.85 |
-| KNN(5) | 0.82 | 0.80 |
-| Logistic Regression | 0.79 | 0.77 |
-| Naive Bayes | 0.73 | 0.66 |
+| MLP (64 nodes, dropout 0.2, lr 0.001, batch 32) | 0.8754 | 0.8571 |
+| SVM | 0.8570 | — |
+| KNN(5) | 0.8128 | — |
+| Logistic Regression | 0.7789 | — |
+| Naive Bayes | 0.7229 | — |
 
-MLP detail: hadron P/R 0.89/0.74, gamma P/R 0.87/0.95 — background
-rejection is the weak side.
+MLP detail: hadron P/R 0.8906/0.7362, gamma P/R 0.8692/0.9509 —
+background rejection is the weak side. (Notebook reported 0.88/0.86
+under the leaky scaler; corrected rerun confirms the ranking.)
 
 ## Methodology notes (fixed in `src/`, preserved in the notebook)
 1. **Scaler leakage**: the notebook fit a fresh scaler per split; `src/`
