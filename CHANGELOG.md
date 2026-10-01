@@ -12,7 +12,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   `train` (54-config grid search as a function, JSON report).
 - Hermetic pytest suite (schema, stratification, scaler-leakage regression
   test, architecture fidelity, training smoke test); ruff lint; CI.
-- Professional repo hygiene: LICENSE, CONTRIBUTING, CHANGELOG, CI workflow,
+- Professional repo hygiene: CONTRIBUTING, CHANGELOG, CI workflow,
   Makefile, model card, raw data removed from tracking + download script.
 
 ### Fixed
