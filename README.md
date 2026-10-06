@@ -70,3 +70,21 @@ make test lint              # 10 tests, ruff clean
 bash scripts/download_data.sh  # fetch MAGIC04 into data/
 make train                  # 54-config grid (~1h CPU); saves models/mlp_best.keras + grid_report.json
 ```
+
+## Problems Encountered (Build & Analysis)
+
+1. **Scaler leakage (the big one).** The notebook fit a fresh
+   `StandardScaler` per split — val/test statistics leaked into their own
+   features and identical showers were encoded differently per split. Fixed
+   to fit-on-train/transform-everywhere, pinned by a regression test that
+   asserts val/test use train statistics exactly. Corrected rerun: 0.8754
+   vs reported 0.88 — same ranking, now clean.
+2. **Unstratified split.** `np.split` on a global shuffle gave no class
+   balance guarantee and seeded from global RNG state. Replaced with
+   stratified `train_test_split(random_state=42)`, balance-tested.
+3. **Raw data committed to git.** `magic04.data` (1.4 MB) was versioned
+   alongside code. Removed from tracking (kept in history — 4 MB isn't
+   worth a force-push) and reproduced via `scripts/download_data.sh`.
+4. **Grid selects on validation, reports on test once.** Kept visible and
+   documented rather than silently "fixed" — selection protocol is part of
+   the result, and hiding it would overstate the numbers.
